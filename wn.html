@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+  <h1 style="margin-top: 100px;">Grabar numero</h1>
  <input type="number" id="cnumero"/>
  <p id="Mensajes">mensajes:</p>
 
@@ -14,7 +15,7 @@ function guardarNota() {
     fecha: new Date().toISOString()
   };
   localStorage.setItem("datosSorteo", JSON.stringify(contenido));
-  document.getElementById("cnumero").innerHTML="Datos guardados correctamente";
+  document.getElementById("Mensajes").innerHTML="Datos guardados correctamente";
 }
 
 document.getElementById("grabaNumero").addEventListener("click",()=>{
