@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <textarea id="nota"></textarea>
+  <button onclick="guardarNota()">Guardar</button>
+  <script>
+   
+
+    /////////////////// base de datos
+    // Abrir base de datos
+const request = indexedDB.open('miBaseDeDatos', 1);
+
+request.onupgradeneeded = (event) => {
+  const db = event.target.result;
+  const store = db.createObjectStore('datos', { keyPath: 'id' });
+};
+
+request.onsuccess = (event) => {
+  const db = event.target.result;
+  const transaction = db.transaction('datos', 'readwrite');
+  const store = transaction.objectStore('datos');
+
+  // Guardar un objeto JSON
+  store.put({ id: 1, contenido: { nombre: "Ejemplo" } });
+};
+  </script>
+</body>
+</html>

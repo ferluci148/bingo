@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="margin-top: 100px;font-size: 48px;text-align: center;"> !!!! BINGO !!!!</h1>
+    <h1>   Último Número</h1>
+    <input type="number" x-webkit-speech="x-webkit-speech" id="sorteo" style="font-size: 48px;"/>
+    
+    <input type="button" id="enviar" value ="Pantalla"  style="margin-left:20px;font-size:  48px;"/>
+    <input type="button" id="grabar" value ="Grabar Json"  style="margin-left:20px;font-size:  48px;"/>
+    <script>
+        let envioPantalla=document.getElementById("enviar");
+       
+        envioPantalla.addEventListener("click",()=>{
+            let numero=document.getElementById("sorteo").value;
+         
+            let urlEnvio="https://ferluci148.github.io/LocPar/visualizaSorteo.html?numero="+numero
+            window.location.href=urlEnvio
+        },false)
+//////////////////////////////////////////////////////////
+/// Gtabar numero sorteo
+        let BotonGrabarSorteo=document.getElementById("grabar");
+       
+        BotonGrabarSorteo.addEventListener("click",()=>{
+            let numero=document.getElementById("sorteo").value;
+            try {
+    // Solicitar permiso para guardar un archivo
+    const handle =   window.showSaveFilePicker({
+      suggestedName: 'datos.json',
+      types: [{
+        description: 'Archivos JSON',
+        accept: { 'application/json': ['.json'] },
+      }],
+    });
+
+    // Crear un stream de escritura
+    const writable =   handle.createWritable();
+      writable.write(JSON.stringify(data, null, 2)); // Formato legible
+      writable.close();
+
+    console.log('Archivo guardado correctamente.');
+  } catch (error) {
+    console.error('Error al guardar:', error);
+  }
+        },false)
+
+    </script>
+</body>
+</html>

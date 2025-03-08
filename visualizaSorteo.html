@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="margin-top: 100px;margin-bottom: 50px; text-align: center;">!!!! BINGO !!!!</h1>
+    <h1 id="ultimoNumero" style="font-size: 48;">Nº</h1>
+    <p style="margin-top: 50px; text-align: center;font-size: 348px;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" id="enlaceurl"></p>
+    
+    <input type="button" id="volver" value="Sortear siguiente Númro"  style="font-size: 36px;"/>
+    <script>
+    const urlCompleta = new URL(window.location.href);
+    let elementoUrl= document.getElementById("enlaceurl")    
+    elementoUrl.innerHTML=" "+urlCompleta.searchParams.get('numero');
+    
+
+
+    // Volver a sorteart siguiente numero
+    let siguienteSorteo=document.getElementById("volver");
+       
+    siguienteSorteo.addEventListener("click",()=>{
+            
+         
+            let urlEnvio="https://ferluci148.github.io/LocPar/enviaNumero.html"
+            window.location.href=urlEnvio
+        },false)
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bluetooth Request</title>
+</head>
+<body>
+  <button id="requestButton">Solicitar Dispositivo Bluetooth</button>
+  <script>
+    const requestButton = document.querySelector('#requestButton');
+
+    requestButton.addEventListener('click', () => {
+      navigator.bluetooth.requestDevice({
+        acceptAllDevices: true
+      })
+      .then(device => {
+        console.log('Dispositivo Bluetooth seleccionado:', device.name);
+        // Aquí puedes realizar operaciones con el dispositivo
+      })
+      .catch(error => {
+        console.error('Error al solicitar el dispositivo Bluetooth:', error);
+      });
+    });
+  </script>
+</body>
+</html>

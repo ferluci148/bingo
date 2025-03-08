@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Receptor TV</title>
+</head>
+<body>
+    Nº recibido: <input type="text" id="mensaje"/>
+    <script>
+const queryString = window.location.search; // Devuelve "?nombre=pepe"
+
+// Parsear los parámetros
+const parametros = new URLSearchParams(queryString);
+
+// Obtener el valor del parámetro "nombre"
+const numero = parametros.get('numero'); // Devuelve "pepe"
+
+console.log(numero); // Muestra "pepe"
+    </script>
+</body>
+</html>
