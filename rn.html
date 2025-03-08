@@ -7,7 +7,8 @@
 </head>
 <body>
   <h1 style="margin-top: 100px;"> LEER DATOS SORTEO</h1>
-  <h2 id="cajon"></h2>
+  <h2 id="cajon">Mensajes</h2>
+  <p id="Mensajes">Mensajes</p>
     <input type="text" id="caja" />
   <script>
 window.onload = () => {
@@ -15,8 +16,9 @@ window.onload = () => {
   if (datosRaw) {
     const datos = JSON.parse(datosRaw);
     document.getElementById("cajon").innerHTML = datos.numero;
+    document.getElementById("Mensajes").innerHTML="Datos Leidos correctamente";
   } else {
-    document.getElementById("cajon").innerHTML = "No hay datos";
+    document.getElementById("Mensajes").innerHTML="NO LEIDOS correcDatamente";
   }
 };
   </script>  
