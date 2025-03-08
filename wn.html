@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html>
 <body>
-  <textarea id="nota"></textarea>
-  <button onclick="guardarNota()">Guardar</button>
+ <input type="number" id="cnumero"/>
+ <p id="Mensajes">mensajes:</p>
+
+ <input type="button" id="grabaNumero" value="Grabar Nuemero"/>
+
   <script>
-   
+ // Guardar datos en localStorage
+function guardarNota() {
+  const contenido = {
+    numero: document.getElementById("cnumero").value,
+    fecha: new Date().toISOString()
+  };
+  localStorage.setItem("datosSorteo", JSON.stringify(contenido));
+  document.getElementById("cnumero").innerHTML="Datos guardados correctamente";
+}
 
-    /////////////////// base de datos
-    // Abrir base de datos
-const request = indexedDB.open('miBaseDeDatos', 1);
+document.getElementById("grabaNumero").addEventListener("click",()=>{
+  guardarNota() 
 
-request.onupgradeneeded = (event) => {
-  const db = event.target.result;
-  const store = db.createObjectStore('datos', { keyPath: 'id' });
-};
-
-request.onsuccess = (event) => {
-  const db = event.target.result;
-  const transaction = db.transaction('datos', 'readwrite');
-  const store = transaction.objectStore('datos');
-
-  // Guardar un objeto JSON
-  store.put({ id: 1, contenido: { nombre: "Ejemplo" } });
-};
+})
   </script>
 </body>
 </html>
