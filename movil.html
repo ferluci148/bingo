@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Residencia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        input {
+            font-size: 2em;
+            width: 150px;
+            padding: 15px;
+            margin: 20px;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 15px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <!-- Cargar Firebase desde la CDN -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDk-rY3qiB9irL1tpKSofu_K4vyWy_i5Fo",
+            authDomain: "bingoresidencia.firebaseapp.com",
+            databaseURL: "https://bingoresidencia-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "bingoresidencia",
+            storageBucket: "bingoresidencia.appspot.com",
+            messagingSenderId: "605998816614",
+            appId: "1:605998816614:web:6216b804f1a806d4c3fca7"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore(); // Inicializar Firestore
+
+        // Función para enviar el número de bingo
+        function enviar() {
+            const numeroBola = document.getElementById("numeroBola").value;
+            const timestamp = new Date(); // Guarda la fecha y hora del número
+
+            if (numeroBola >= 1 && numeroBola <= 90) {
+                db.collection("bingosala").add({
+                    numero: parseInt(numeroBola), // Guardar como número
+                    fecha: timestamp // Guardar fecha y hora
+                })
+                .then(() => {
+                  //  alert("Número guardado correctamente en Firestore.");
+                    document.getElementById("numeroBola").value = ""; // Limpiar el input
+                })
+                .catch(error => {
+                    alert("Error al guardar: " + error.message);
+                });
+            } else {
+                alert("Introduce un número entre 1 y 90.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Introducir Número del Bingo</h1>
+    <input type="number" id="numeroBola" min="1" max="90">
+    <br>
+    <button onclick="enviar()">Guardar Bola</button>
+
+    
+</body>
+</html>

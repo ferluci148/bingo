@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial del Bingo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 30vh;
+            background: #000;
+            color: #FFF;
+            font-family: Arial, sans-serif;
+        }
+        #numeroDisplay {
+            font-size: 20vw; /* Tamaño responsivo */
+            text-shadow: 0 0 20px #FFF;
+            animation: brillo 1s infinite alternate;
+        }
+        @keyframes brillo {
+            from { text-shadow: 0 0 10px #FFF; }
+            to { text-shadow: 0 0 30px #FFF, 0 0 10px #4CAF50; }
+        }
+    </style>
+    <!-- Firebase 9+ usa módulos ES6, así que cargamos la versión compat -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+  
+</head>
+<body onload="escucharBolasTiempoReal()">
+   <!-- <h1>Historial de Bolas del Bingo</h1>
+    <ul id="listaBolas"></ul>-->
+    <div id="numeroDisplay">0</div>
+
+
+
+</body>
+
+<script>
+    // Configuración de Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDk-rY3qiB9irL1tpKSofu_K4vyWy_i5Fo",
+        authDomain: "bingoresidencia.firebaseapp.com",
+        databaseURL: "https://bingoresidencia-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "bingoresidencia",
+        storageBucket: "bingoresidencia.appspot.com",
+        messagingSenderId: "605998816614",
+        appId: "1:605998816614:web:6216b804f1a806d4c3fca7"
+    };
+
+    // Inicializar Firebase con compatibilidad
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Función para leer y mostrar los datos de la colección "bingosala"
+    /*
+    function leerBolas() {
+        const listaBolas = document.getElementById("listaBolas");
+        listaBolas.innerHTML = "<li>Cargando datos...</li>"; // Mensaje temporal
+        
+        db.collection("bingosala").orderBy("fecha", "desc").get()
+            .then(querySnapshot => {
+                listaBolas.innerHTML = ""; // Limpiar la lista
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const fecha = new Date(data.fecha.seconds * 1000).toLocaleString(); // Convertir fecha
+                 //   listaBolas.innerHTML = `<li>Bola: <b>${data.numero}</b> - ${fecha}</li>`;
+                    doc = querySnapshot.docs[0].data();
+                });
+                const doc = querySnapshot.docs[0].data();
+                numeroDisplay.innerHTML = `${doc.numero}`
+               // console.log(doc.numero)
+            })
+            .catch(error => {
+                listaBolas.innerHTML = "<li>Error al cargar los datos.</li>";
+                console.error("Error al obtener los datos:", error);
+            });
+    }
+*/
+    function escucharBolasTiempoReal() {
+            const listaBolas = document.getElementById("listaBolas");
+            const numeroDisplay = document.getElementById("numeroDisplay");
+
+            db.collection("bingosala").orderBy("fecha", "desc")
+                .onSnapshot(querySnapshot => {
+                   // listaBolas.innerHTML = ""; // Limpiar la lista
+                    if (!querySnapshot.empty) {
+                        querySnapshot.forEach(doc => {
+                            const data = doc.data();
+                            const fecha = new Date(data.fecha.seconds * 1000).toLocaleString(); // Convertir fecha
+                       //     listaBolas.innerHTML += `<li>Bola: <b>${data.numero}</b> - ${fecha}</li>`;
+                        });
+
+                        // Mostrar solo el último número en grande
+                        const ultimaBola = querySnapshot.docs[0].data();
+                        numeroDisplay.innerHTML = `<h1>${ultimaBola.numero}</h1>`;
+                    } else {
+                        listaBolas.innerHTML = "<li>No hay bolas registradas aún.</li>";
+                        numeroDisplay.innerHTML = "<h1>-</h1>";
+                    }
+                }, error => {
+                    console.error("Error al obtener datos en tiempo real:", error);
+                    listaBolas.innerHTML = "<li>Error al cargar los datos.</li>";
+                });
+        }
+   
+    
+</script>
+</html>
